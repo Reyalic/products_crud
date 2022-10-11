@@ -13,7 +13,7 @@ db.authenticate()
 
 db.sync()
     .then(() => console.log("Database synced"))
-    .catch(er => console.log(err))
+    .catch(err => console.log(err))
 
 initModels()
 

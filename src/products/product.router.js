@@ -7,8 +7,7 @@ router.get("/", productsServices.getAllProducts)
 router.post("/", productsServices.postProduct)
 
 router.get("/:id", productsServices.getProductById)
-// router.delete("/:id")
-// router.patch("/:id")
-// router.put("/:id")
+router.patch('/:id', productsServices.patchProductById);
+router.delete('/:id', productsServices.deleteProductById);
 
 module.exports = router

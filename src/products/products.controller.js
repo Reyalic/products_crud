@@ -1,5 +1,5 @@
-const uuid = require("uuid")
-const Products = require("../models/products.models.js")
+const { faker } = require('@faker-js/faker');
+const Products = require("../models/products.models")
 
 const getAllProducts = () => {
     const data = Products.findAll()
@@ -11,25 +11,23 @@ const getAllProducts = () => {
 //     .then((response) => console.log(response))
 //     .catch((err) => console.log(err))
 
-const createProduct = async (data) => {
-    const newProduct = await Products.create({
-        id: uuid.v4(),
-        name: data.name,
-        category: data.category,
-        price: data.price,
-        isAvailable: data.isAvailable
-    })
-    return newProduct
+const generateProducts = (length = 1) => {
+    for (let i = 0; i < length; i++) {
+        Products.create({
+            id: faker.datatype.uuid(),
+            name: faker.commerce.productName(),
+            category: faker.commerce.product(),
+            price: parseInt(faker.commerce.price(100, 32000)),
+            isAvailable: faker.datatype.boolean()
+        })
+            .then(() => { })
+            .catch(console.error);
+    }
 }
 
-// createProduct({
-//     name: "Iphone 13",
-//     category: "smartphones",
-//     price: 1200,
-//     isAvailable: true
-// })
-//     .then(response => console.log(response))
-//     .catch(err => console.log(err))
+// console.log('Creating products');
+// generateProducts(80);
+
 
 const getProductById = async (id) => {
     const data = await Products.findOne({
@@ -43,10 +41,24 @@ const getProductById = async (id) => {
 //     .then((response) => console.log(response))
 //     .catch((err) => console.log(err))
 
+async function deleteProductById(id) {
+    return Products.destroy({
+        where: { id } 
+    });
+}
+
+async function modifyProductById(id, data) {
+    return Products.update(data, {
+        where: { id }
+    });
+}
+
 module.exports = {
     getAllProducts,
     getProductById,
-    createProduct
+    generateProducts,
+    deleteProductById,
+    modifyProductById
 }
 
 

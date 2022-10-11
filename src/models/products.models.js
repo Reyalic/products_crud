@@ -9,7 +9,7 @@ const Products = db.define("products", {
         allowNull: false
     },
     name: {
-        type: DataTypes.STRING(15),
+        type: DataTypes.STRING,
         allowNull: false,
     }, category: {
         type: DataTypes.STRING,
